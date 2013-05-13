@@ -1,0 +1,102 @@
+# project libmonome (1.3) configured on Sat Apr 20 20:50:52 2013 by
+# waf 1.7.0 (abi 98, python 20701f0 on darwin)
+# using ./waf configure
+#
+----------------------------------------
+Setting top to
+/Users/Andy/Desktop/Programming/libmonome
+----------------------------------------
+Setting out to
+/Users/Andy/Desktop/Programming/libmonome/build
+----------------------------------------
+Checking for 'gcc' (c compiler)
+find program=['gcc', 'cc'] paths=['/usr/bin', '/bin', '/usr/sbin', '/sbin', '/usr/local/bin', '/usr/X11/bin'] var='CC' -> '/usr/bin/gcc'
+find program=['ar'] paths=['/usr/bin', '/bin', '/usr/sbin', '/sbin', '/usr/local/bin', '/usr/X11/bin'] var='AR' -> '/usr/bin/ar'
+/usr/bin/gcc
+----------------------------------------
+Checking for endianness
+==>
+
+short int ascii_mm[] = { 0x4249, 0x4765, 0x6E44, 0x6961, 0x6E53, 0x7953, 0 };
+short int ascii_ii[] = { 0x694C, 0x5454, 0x656C, 0x6E45, 0x6944, 0x6E61, 0 };
+int use_ascii (int i) {
+	return ascii_mm[i] + ascii_ii[i];
+}
+short int ebcdic_ii[] = { 0x89D3, 0xE3E3, 0x8593, 0x95C5, 0x89C4, 0x9581, 0 };
+short int ebcdic_mm[] = { 0xC2C9, 0xC785, 0x95C4, 0x8981, 0x95E2, 0xA8E2, 0 };
+int use_ebcdic (int i) {
+	return ebcdic_mm[i] + ebcdic_ii[i];
+}
+extern int foo;
+
+<==
+[1/2] [32mc: build/.conf_check_25b071492c551353d5e3a04f78fc5ba1/test.c -> build/.conf_check_25b071492c551353d5e3a04f78fc5ba1/testbuild/test.c.1.o
+[0m
+['/usr/bin/gcc', '../test.c', '-c', '-o', 'test.c.1.o']
+[2/2] [35mgrep_for_endianness: build/.conf_check_25b071492c551353d5e3a04f78fc5ba1/testbuild/test.c.1.o
+[0m
+little
+----------------------------------------
+Checking for working poll()
+==>
+
+		#include <stdlib.h>
+		#include <poll.h>
+
+		int main(int argc, char **argv) {
+		    struct pollfd fds[1];
+
+		    fds[0].fd = open("/dev/null", 1);
+		    fds[0].events = POLLIN;
+
+		    if( poll(fds, 1, 0) < 0 || fds[0].revents & POLLNVAL )
+		        exit(1);
+		    exit(0);
+		}
+<==
+[1/3] [32mc: build/.conf_check_85594aa379d7e07f8afad33a381b3dab/test.c -> build/.conf_check_85594aa379d7e07f8afad33a381b3dab/testbuild/test.c.1.o
+[0m
+['/usr/bin/gcc', '../test.c', '-c', '-o', 'test.c.1.o']
+[2/3] [33mcprogram: build/.conf_check_85594aa379d7e07f8afad33a381b3dab/testbuild/test.c.1.o -> build/.conf_check_85594aa379d7e07f8afad33a381b3dab/testbuild/testprog
+[0m
+['/usr/bin/gcc', 'test.c.1.o', '-o', '/Users/Andy/Desktop/Programming/libmonome/build/.conf_check_85594aa379d7e07f8afad33a381b3dab/testbuild/testprog']
+[3/3] [35mtest_exec: build/.conf_check_85594aa379d7e07f8afad33a381b3dab/testbuild/testprog
+[0m
+['/Users/Andy/Desktop/Programming/libmonome/build/.conf_check_85594aa379d7e07f8afad33a381b3dab/testbuild/testprog']
+no (will use select())
+from /Users/Andy/Desktop/Programming/libmonome: The configuration failed False
+----------------------------------------
+Checking for library dl
+==>
+
+int main() {
+	return 0;
+}
+
+<==
+[1/2] [32mc: build/.conf_check_f48d99e6881dd14d115486f3373cffec/test.c -> build/.conf_check_f48d99e6881dd14d115486f3373cffec/testbuild/test.c.1.o
+[0m
+['/usr/bin/gcc', '../test.c', '-c', '-o', 'test.c.1.o']
+[2/2] [33mcprogram: build/.conf_check_f48d99e6881dd14d115486f3373cffec/testbuild/test.c.1.o -> build/.conf_check_f48d99e6881dd14d115486f3373cffec/testbuild/testprog
+[0m
+['/usr/bin/gcc', 'test.c.1.o', '-o', '/Users/Andy/Desktop/Programming/libmonome/build/.conf_check_f48d99e6881dd14d115486f3373cffec/testbuild/testprog', '-ldl']
+yes
+----------------------------------------
+Checking for liblo
+==>
+
+int main() {
+	return 0;
+}
+
+<==
+[1/3] [32mc: build/.conf_check_d738a55e97e2101c058a778b1ef4d2d5/test.c -> build/.conf_check_d738a55e97e2101c058a778b1ef4d2d5/testbuild/test.c.1.o
+[0m
+['/usr/bin/gcc', '../test.c', '-c', '-o', 'test.c.1.o']
+[2/3] [33mcprogram: build/.conf_check_d738a55e97e2101c058a778b1ef4d2d5/testbuild/test.c.1.o -> build/.conf_check_d738a55e97e2101c058a778b1ef4d2d5/testbuild/testprog
+[0m
+['/usr/bin/gcc', 'test.c.1.o', '-o', '/Users/Andy/Desktop/Programming/libmonome/build/.conf_check_d738a55e97e2101c058a778b1ef4d2d5/testbuild/testprog', '-llo']
+[3/3] [35mtest_exec: build/.conf_check_d738a55e97e2101c058a778b1ef4d2d5/testbuild/testprog
+[0m
+['/Users/Andy/Desktop/Programming/libmonome/build/.conf_check_d738a55e97e2101c058a778b1ef4d2d5/testbuild/testprog']
+yes

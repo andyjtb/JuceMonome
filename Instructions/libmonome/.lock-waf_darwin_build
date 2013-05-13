@@ -1,0 +1,8 @@
+argv = ['./waf', 'configure']
+environ = {'USERNAME': 'root', 'SSH_AUTH_SOCK': '/tmp/launch-QS0cCH/Listeners', 'VERSIONER_PYTHON_PREFER_32_BIT': 'no', 'SUDO_UID': '501', 'SUDO_GID': '20', 'LOGNAME': 'root', 'USER': 'root', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin', 'HOME': '/Users/Andy', 'DISPLAY': '/tmp/launch-oTIZt9/org.x:0', 'LANG': 'en_GB.UTF-8', 'SUDO_COMMAND': './waf configure', 'TERM': 'xterm-256color', 'SHELL': '/bin/bash', 'VERSIONER_PYTHON_VERSION': '2.7', '__CF_USER_TEXT_ENCODING': '0x0:0:0', 'MAIL': '/var/mail/root', 'SUDO_USER': 'Andy'}
+files = ['/Users/Andy/Desktop/Programming/libmonome/wscript']
+hash = 379485653847146732
+options = {'enable_debug': False, 'force': False, 'verbose': 0, 'destdir': '', 'zones': '', 'prefix': '/usr/local/', 'download': False, 'targets': '', 'out': '', 'nocache': False, 'progress_bar': 0, 'top': '', 'cython_flags': '', 'files': '', 'jobs': 2, 'distcheck_args': None, 'disable_osc': False, 'enable_multilib': False, 'enable_embedded_protos': False, 'keep': 0, 'enable_python': False, 'check_c_compiler': 'gcc'}
+out_dir = '/Users/Andy/Desktop/Programming/libmonome/build'
+run_dir = '/Users/Andy/Desktop/Programming/libmonome'
+top_dir = '/Users/Andy/Desktop/Programming/libmonome'
