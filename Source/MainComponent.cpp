@@ -17,13 +17,13 @@ MainContentComponent::MainContentComponent()
 	if ( !(monome = monome_open("/dev/tty.usbserial-m40h0506")))
     {
         DBG("Failed to open");
+        jassert("Failed to open, try changing the number above");
     }
     else
     {
         DBG("Opened ok");
+        monome_led_all(monome, 0);
     }
-    
-	monome_led_all(monome, 0);
 
     monGui = new MonomeGui(monome);
     addAndMakeVisible(monGui);

@@ -32,6 +32,5 @@ public:
 
 private:
     monome_t* monome;
-//    OptionalScopedPointer<MonomeGui> gui;
 };
 #endif /* defined(__JuceMonome__MonomeThread__) */

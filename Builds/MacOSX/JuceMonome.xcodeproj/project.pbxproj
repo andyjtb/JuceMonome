@@ -2270,6 +2270,7 @@
 				5A97024B61DD4B19DB269113 /* Resources */,
 				0C0B5E620691D0A4380D60AF /* Sources */,
 				FF4AE615999736E4EC9789C2 /* Frameworks */,
+				A13D38E9174185AF002DF080 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2315,6 +2316,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A13D38E9174185AF002DF080 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if ! [ -e \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks\" ]\nthen\nmkdir \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks\"\nfi\ncp -f \"$LibMonome/libmonome.dylib\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/libmonome.dylib\"\n\ninstall_name_tool -change ./libmonome.dylib @loader_path/../Frameworks/libmonome.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0C0B5E620691D0A4380D60AF /* Sources */ = {
