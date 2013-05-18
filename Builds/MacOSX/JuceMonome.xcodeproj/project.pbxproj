@@ -25,9 +25,8 @@
 		7AFDBB7014EB853AD16DFDEA /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD12EACBBC2520CE75E94E3D /* Main.cpp */; };
 		94B1D2D6B42D25C5279C6EB6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 837775C2958B33F1D8A76DE5 /* AudioToolbox.framework */; };
 		9D68A3DFFE9D9F1D85EDAC3F /* juce_gui_basics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B7381B10CD7D4C165EE33 /* juce_gui_basics.mm */; };
-		A12176DE172AE40200D52686 /* MonomeGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12176DC172AE40100D52686 /* MonomeGui.cpp */; };
+		A12176DE172AE40200D52686 /* Monome.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12176DC172AE40100D52686 /* Monome.cpp */; };
 		A1790498171B45C200D9A5AB /* libmonome.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A1790497171B45C200D9A5AB /* libmonome.dylib */; };
-		A1849A7217232AA800C8E9D0 /* MonomeThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1849A7017232AA800C8E9D0 /* MonomeThread.cpp */; };
 		B154FD9AD6211051F0154713 /* juce_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = C917C30A68E77275874A8D60 /* juce_graphics.mm */; };
 		CD7D7A64F211721D5E2075FB /* juce_events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6C1E865A15A4AC66E5407965 /* juce_events.mm */; };
 		E4CA4335C89106274896442B /* DiscRecording.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C4FF3B0389851A3BBA5B1E /* DiscRecording.framework */; };
@@ -512,11 +511,9 @@
 		A00EDD0DCE413C35940977BC /* juce_OggVorbisAudioFormat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_OggVorbisAudioFormat.h; path = ../../JuceLibraryCode/modules/juce_audio_formats/codecs/juce_OggVorbisAudioFormat.h; sourceTree = SOURCE_ROOT; };
 		A0F117454266C20EB8E39DED /* juce_win32_SystemStats.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_win32_SystemStats.cpp; path = ../../JuceLibraryCode/modules/juce_core/native/juce_win32_SystemStats.cpp; sourceTree = SOURCE_ROOT; };
 		A115EF9496129B4E8DF0FB61 /* juce_Value.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_Value.cpp; path = ../../JuceLibraryCode/modules/juce_data_structures/values/juce_Value.cpp; sourceTree = SOURCE_ROOT; };
-		A12176DC172AE40100D52686 /* MonomeGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MonomeGui.cpp; path = ../../Source/MonomeGui.cpp; sourceTree = "<group>"; };
-		A12176DD172AE40100D52686 /* MonomeGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MonomeGui.h; path = ../../Source/MonomeGui.h; sourceTree = "<group>"; };
-		A1790497171B45C200D9A5AB /* libmonome.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmonome.dylib; path = ../../../../../../../../../usr/local/lib/libmonome.dylib; sourceTree = "<group>"; };
-		A1849A7017232AA800C8E9D0 /* MonomeThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MonomeThread.cpp; path = ../../Source/MonomeThread.cpp; sourceTree = "<group>"; };
-		A1849A7117232AA800C8E9D0 /* MonomeThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MonomeThread.h; path = ../../Source/MonomeThread.h; sourceTree = "<group>"; };
+		A12176DC172AE40100D52686 /* Monome.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Monome.cpp; path = ../../Source/Monome.cpp; sourceTree = "<group>"; };
+		A12176DD172AE40100D52686 /* Monome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monome.h; path = ../../Source/Monome.h; sourceTree = "<group>"; };
+		A1790497171B45C200D9A5AB /* libmonome.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmonome.dylib; sourceTree = LibMonome; };
 		A1AA0A1078D4FC334B2AA781 /* juce_ios_UIViewComponentPeer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_ios_UIViewComponentPeer.mm; path = ../../JuceLibraryCode/modules/juce_gui_basics/native/juce_ios_UIViewComponentPeer.mm; sourceTree = SOURCE_ROOT; };
 		A1C966A3D20EDF333477EC6C /* juce_mac_AppleRemote.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_mac_AppleRemote.mm; path = ../../JuceLibraryCode/modules/juce_gui_extra/native/juce_mac_AppleRemote.mm; sourceTree = SOURCE_ROOT; };
 		A1FBE5F8E189B858A3308593 /* juce_PerformanceCounter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_PerformanceCounter.h; path = ../../JuceLibraryCode/modules/juce_core/time/juce_PerformanceCounter.h; sourceTree = SOURCE_ROOT; };
@@ -1495,10 +1492,8 @@
 				38C3DF0663E82AFCE13B5B93 /* MainComponent.cpp */,
 				43E751123F126136AC29A01D /* MainComponent.h */,
 				AD12EACBBC2520CE75E94E3D /* Main.cpp */,
-				A1849A7017232AA800C8E9D0 /* MonomeThread.cpp */,
-				A1849A7117232AA800C8E9D0 /* MonomeThread.h */,
-				A12176DC172AE40100D52686 /* MonomeGui.cpp */,
-				A12176DD172AE40100D52686 /* MonomeGui.h */,
+				A12176DC172AE40100D52686 /* Monome.cpp */,
+				A12176DD172AE40100D52686 /* Monome.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -2349,8 +2344,7 @@
 				B154FD9AD6211051F0154713 /* juce_graphics.mm in Sources */,
 				9D68A3DFFE9D9F1D85EDAC3F /* juce_gui_basics.mm in Sources */,
 				4B731F92183ED90D6FBC7D1A /* juce_gui_extra.mm in Sources */,
-				A1849A7217232AA800C8E9D0 /* MonomeThread.cpp in Sources */,
-				A12176DE172AE40200D52686 /* MonomeGui.cpp in Sources */,
+				A12176DE172AE40200D52686 /* Monome.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2404,6 +2398,7 @@
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = JuceMonome;
 				VALID_ARCHS = x86_64;
 				WARNING_CFLAGS = "-Wreorder";
@@ -2459,6 +2454,7 @@
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = JuceMonome;
 				VALID_ARCHS = x86_64;
 				WARNING_CFLAGS = "-Wreorder";

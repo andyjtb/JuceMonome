@@ -199,7 +199,6 @@ void Thread::stopThread (const int timeOutMilliseconds)
         }
     }
 }
-
 //==============================================================================
 bool Thread::setPriority (const int newPriority)
 {

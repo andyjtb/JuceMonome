@@ -10,8 +10,10 @@
 #define __MAINCOMPONENT_H_F14FD3C1__
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MonomeThread.h"
-#include "MonomeGui.h"
+
+//Juce class
+#include "Monome.h"
+//Libmonome
 #include <monome.h>
 
 
@@ -20,7 +22,8 @@
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class MainContentComponent   : public Component
+class MainContentComponent   :  public Component,
+                                public Button::Listener
 {
 public:
     //==============================================================================
@@ -30,13 +33,16 @@ public:
     void paint (Graphics&);
     void resized();
     
+    void buttonClicked (Button* button);
+    
 private:
     monome_t* monome;
-
-//    unsigned int grid[8][8] = { [0 ... 7][0 ... 7] = 0 };
-
-    MonomeThread* monThread;
+    
+    ComboBox monomeSelect;
+    TextButton connect, disconnect;
+    
     ScopedPointer<MonomeGui> monGui;
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };
