@@ -510,9 +510,11 @@
 		9FF4E1F75BD9A70D8C8CA19A /* juce_PositionableAudioSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_PositionableAudioSource.h; path = ../../JuceLibraryCode/modules/juce_audio_basics/sources/juce_PositionableAudioSource.h; sourceTree = SOURCE_ROOT; };
 		A00EDD0DCE413C35940977BC /* juce_OggVorbisAudioFormat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_OggVorbisAudioFormat.h; path = ../../JuceLibraryCode/modules/juce_audio_formats/codecs/juce_OggVorbisAudioFormat.h; sourceTree = SOURCE_ROOT; };
 		A0F117454266C20EB8E39DED /* juce_win32_SystemStats.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_win32_SystemStats.cpp; path = ../../JuceLibraryCode/modules/juce_core/native/juce_win32_SystemStats.cpp; sourceTree = SOURCE_ROOT; };
+		A10C9D5817491E37002E09D0 /* MonomeUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonomeUtility.h; sourceTree = "<group>"; };
+		A10C9D5A17493AB4002E09D0 /* MonomeBehaviour.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonomeBehaviour.h; sourceTree = "<group>"; };
 		A115EF9496129B4E8DF0FB61 /* juce_Value.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_Value.cpp; path = ../../JuceLibraryCode/modules/juce_data_structures/values/juce_Value.cpp; sourceTree = SOURCE_ROOT; };
-		A12176DC172AE40100D52686 /* Monome.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Monome.cpp; path = ../../Source/Monome.cpp; sourceTree = "<group>"; };
-		A12176DD172AE40100D52686 /* Monome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monome.h; path = ../../Source/Monome.h; sourceTree = "<group>"; };
+		A12176DC172AE40100D52686 /* Monome.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monome.cpp; sourceTree = "<group>"; };
+		A12176DD172AE40100D52686 /* Monome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monome.h; sourceTree = "<group>"; };
 		A1790497171B45C200D9A5AB /* libmonome.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmonome.dylib; sourceTree = LibMonome; };
 		A1AA0A1078D4FC334B2AA781 /* juce_ios_UIViewComponentPeer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_ios_UIViewComponentPeer.mm; path = ../../JuceLibraryCode/modules/juce_gui_basics/native/juce_ios_UIViewComponentPeer.mm; sourceTree = SOURCE_ROOT; };
 		A1C966A3D20EDF333477EC6C /* juce_mac_AppleRemote.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_mac_AppleRemote.mm; path = ../../JuceLibraryCode/modules/juce_gui_extra/native/juce_mac_AppleRemote.mm; sourceTree = SOURCE_ROOT; };
@@ -1489,11 +1491,10 @@
 		8B6B038E49773A27D2577B46 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				A10C9D5717491DD9002E09D0 /* Monome */,
 				38C3DF0663E82AFCE13B5B93 /* MainComponent.cpp */,
 				43E751123F126136AC29A01D /* MainComponent.h */,
 				AD12EACBBC2520CE75E94E3D /* Main.cpp */,
-				A12176DC172AE40100D52686 /* Monome.cpp */,
-				A12176DD172AE40100D52686 /* Monome.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -1539,6 +1540,26 @@
 				2CFA541095E07D444D7A5141 /* juce_UndoManager.h */,
 			);
 			name = undomanager;
+			sourceTree = "<group>";
+		};
+		A10C9D5717491DD9002E09D0 /* Monome */ = {
+			isa = PBXGroup;
+			children = (
+				A10C9D5917493A8C002E09D0 /* Behaviours */,
+				A12176DC172AE40100D52686 /* Monome.cpp */,
+				A12176DD172AE40100D52686 /* Monome.h */,
+				A10C9D5817491E37002E09D0 /* MonomeUtility.h */,
+			);
+			name = Monome;
+			path = ../../Source/Monome;
+			sourceTree = SOURCE_ROOT;
+		};
+		A10C9D5917493A8C002E09D0 /* Behaviours */ = {
+			isa = PBXGroup;
+			children = (
+				A10C9D5A17493AB4002E09D0 /* MonomeBehaviour.h */,
+			);
+			path = Behaviours;
 			sourceTree = "<group>";
 		};
 		A1864DFABB0AE100B6DB34E2 /* containers */ = {

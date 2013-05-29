@@ -41,13 +41,42 @@ MonomeGui::MonomeGui(monome_t* _monome)
     clearB.addListener(this);
     clearB.setConnectedEdges(1);
     
+    
+    
     monThread = new MonomeThread (monome, this);
     monThread->startThread();
+    
+    MonomeToggle* toggle = new MonomeToggle();
+    behaviours.add(toggle);
+    
+    MonomeHold* hold = new MonomeHold();
+    behaviours.add(hold);
+    
+    addAndMakeVisible(&behaviourCombo);
+    for (int i = 0; i < behaviours.size(); i++) 
+        behaviourCombo.addItem (behaviours[i]->getName(), i+1);
 }
 
 MonomeGui::~MonomeGui()
 {
+}
+
+void MonomeGui::paint(Graphics& g)
+{
+    g.setColour (Colours::black);
+    g.setFont (Font (12.0000f, Font::plain));
+    g.drawText ("Monome grid",
+                buttonGrid[0][0].getX()-3, buttonGrid[0][0].getY()-15, 80, 16,
+                Justification::centred, true);
     
+    g.drawText ("LED Brightness",
+                intensity.getX(), intensity.getY()-15, 80, 16,
+                Justification::centred, true);
+    
+    g.drawText ("Behaviours",
+                behaviourCombo.getX(), behaviourCombo.getY()-15, 80, 16,
+                Justification::centred, true);
+
 }
 
 void MonomeGui::resized()
@@ -66,9 +95,11 @@ void MonomeGui::resized()
         
     }
     
-    intensity.setBounds(20, getHeight()-60, x-5, 25);
+    intensity.setBounds(20, getHeight()-60, x-5, 15);
     allB.setBounds(35, getHeight()-30, 50,20);
     clearB.setBounds(85, getHeight()-30, 50, 20);
+    
+    behaviourCombo.setBounds(x + 30, buttonGrid[0][0].getY(), 100, 20);
 }
 
 
@@ -77,22 +108,18 @@ void MonomeGui::handleDown(const monome_event_t *e)
     const MessageManagerLock mm;
     
     ToggleButton* b = &buttonGrid[e->grid.x][e->grid.y];
-    b->setToggleState(!b->getToggleState(), true);
+
+    behaviours[behaviourCombo.getSelectedId()-1]->buttonDown(b);
 }
 
 void MonomeGui::handleUp(const monome_event_t *e)
 {
+    const MessageManagerLock mm;
     
-}
-
-GridPosition MonomeGui::getGridPosition (String name)
-{
-    GridPosition pos;
-    
-    pos.x = name.fromFirstOccurrenceOf("x=", false, true).upToFirstOccurrenceOf(",", false, true).getIntValue();
-    pos.y = name.fromFirstOccurrenceOf("y=", false, true).getIntValue();
-    
-    return pos;
+    ToggleButton* b = &buttonGrid[e->grid.x][e->grid.y];
+//    b->setToggleState(!b->getToggleState(), true);
+//     b->setToggleState(false, true);
+    behaviours[behaviourCombo.getSelectedId()-1]->buttonUp(b);
 }
 
 void MonomeGui::sliderValueChanged(Slider *slider)
@@ -138,7 +165,8 @@ void MonomeGui::buttonClicked (Button* _button)
     
     else
     {
-        GridPosition currentPosition = getGridPosition(_button->getName());
+        GridPosition currentPosition;
+        MonomeUtility::getGridPosition(_button->getName(), currentPosition);
         
         if (_button->getToggleState())
             monome_led_on(monome, currentPosition.x, currentPosition.y);

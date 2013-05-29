@@ -13,17 +13,13 @@
 
 //Juce class
 #include "Monome.h"
-//Libmonome
-#include <monome.h>
-
 
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class MainContentComponent   :  public Component,
-                                public Button::Listener
+class MainContentComponent   :  public Component
 {
 public:
     //==============================================================================
@@ -33,15 +29,8 @@ public:
     void paint (Graphics&);
     void resized();
     
-    void buttonClicked (Button* button);
-    
 private:
-    monome_t* monome;
-    
-    ComboBox monomeSelect;
-    TextButton connect, disconnect;
-    
-    ScopedPointer<MonomeGui> monGui;
+    JuceMonome juceMonome;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
