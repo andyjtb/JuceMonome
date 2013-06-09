@@ -1,0 +1,33 @@
+How to do stuff:
+
+1. open terminal and type cd then drag in the liblo-0.26 folder
+It should look like cd myLeetProgrammingStuff/liblo-0.26 
+Press enter
+
+2. type ./configure
+3. type sudo make
+It will ask for your password but you won't see anything when you type, it is there don't panic press enter
+4. type sudo make install
+
+Thats liblo installed next move onto libmonome
+
+5. type cd then drag the libmonome file into terminal
+6. type sudo ./waf configure
+7. type sudo ./waf
+8. type sudo ./waf install
+
+Now everything should be ready and the libmonome library should be installed in /usr/local/lib
+
+10. Open the Xcode project and go to Preferences->Locations->Source trees
+I've set the project to look for the libmonome library using this
+11. Create a new source tree called LibMonome and display name LibMonome with the path /usr/local/lib
+
+Now compile, if it can't open the monome you may need to change the main component open monome call in the constructor to the correct monomer name
+
+Otherwise everything should work, i've left some hideous experiments in the project but feel free to delete them.
+
+Monome Thread is a very simple thread which listens for callbacks from the monome and then triggers functions in the MonomeGui class.
+
+
+Documentation for libmonome:
+http://illest.net/libmonome/documentation.html
