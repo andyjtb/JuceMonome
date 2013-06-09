@@ -25,7 +25,8 @@
 		7AFDBB7014EB853AD16DFDEA /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD12EACBBC2520CE75E94E3D /* Main.cpp */; };
 		94B1D2D6B42D25C5279C6EB6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 837775C2958B33F1D8A76DE5 /* AudioToolbox.framework */; };
 		9D68A3DFFE9D9F1D85EDAC3F /* juce_gui_basics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7F0B7381B10CD7D4C165EE33 /* juce_gui_basics.mm */; };
-		A12176DE172AE40200D52686 /* Monome.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A12176DC172AE40100D52686 /* Monome.cpp */; };
+		A122C172175A4F5C00BF3BA0 /* MonomeGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A122C170175A4F5C00BF3BA0 /* MonomeGui.cpp */; };
+		A122C175175A60BE00BF3BA0 /* DrumPattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A122C173175A60BE00BF3BA0 /* DrumPattern.cpp */; };
 		A1790498171B45C200D9A5AB /* libmonome.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A1790497171B45C200D9A5AB /* libmonome.dylib */; };
 		B154FD9AD6211051F0154713 /* juce_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = C917C30A68E77275874A8D60 /* juce_graphics.mm */; };
 		CD7D7A64F211721D5E2075FB /* juce_events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6C1E865A15A4AC66E5407965 /* juce_events.mm */; };
@@ -513,8 +514,11 @@
 		A10C9D5817491E37002E09D0 /* MonomeUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonomeUtility.h; sourceTree = "<group>"; };
 		A10C9D5A17493AB4002E09D0 /* MonomeBehaviour.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonomeBehaviour.h; sourceTree = "<group>"; };
 		A115EF9496129B4E8DF0FB61 /* juce_Value.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_Value.cpp; path = ../../JuceLibraryCode/modules/juce_data_structures/values/juce_Value.cpp; sourceTree = SOURCE_ROOT; };
-		A12176DC172AE40100D52686 /* Monome.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monome.cpp; sourceTree = "<group>"; };
 		A12176DD172AE40100D52686 /* Monome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monome.h; sourceTree = "<group>"; };
+		A122C170175A4F5C00BF3BA0 /* MonomeGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MonomeGui.cpp; sourceTree = "<group>"; };
+		A122C171175A4F5C00BF3BA0 /* MonomeGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonomeGui.h; sourceTree = "<group>"; };
+		A122C173175A60BE00BF3BA0 /* DrumPattern.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrumPattern.cpp; sourceTree = "<group>"; };
+		A122C174175A60BE00BF3BA0 /* DrumPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrumPattern.h; sourceTree = "<group>"; };
 		A1790497171B45C200D9A5AB /* libmonome.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmonome.dylib; sourceTree = LibMonome; };
 		A1AA0A1078D4FC334B2AA781 /* juce_ios_UIViewComponentPeer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_ios_UIViewComponentPeer.mm; path = ../../JuceLibraryCode/modules/juce_gui_basics/native/juce_ios_UIViewComponentPeer.mm; sourceTree = SOURCE_ROOT; };
 		A1C966A3D20EDF333477EC6C /* juce_mac_AppleRemote.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_mac_AppleRemote.mm; path = ../../JuceLibraryCode/modules/juce_gui_extra/native/juce_mac_AppleRemote.mm; sourceTree = SOURCE_ROOT; };
@@ -1546,9 +1550,12 @@
 			isa = PBXGroup;
 			children = (
 				A10C9D5917493A8C002E09D0 /* Behaviours */,
-				A12176DC172AE40100D52686 /* Monome.cpp */,
 				A12176DD172AE40100D52686 /* Monome.h */,
 				A10C9D5817491E37002E09D0 /* MonomeUtility.h */,
+				A122C170175A4F5C00BF3BA0 /* MonomeGui.cpp */,
+				A122C171175A4F5C00BF3BA0 /* MonomeGui.h */,
+				A122C173175A60BE00BF3BA0 /* DrumPattern.cpp */,
+				A122C174175A60BE00BF3BA0 /* DrumPattern.h */,
 			);
 			name = Monome;
 			path = ../../Source/Monome;
@@ -2365,7 +2372,8 @@
 				B154FD9AD6211051F0154713 /* juce_graphics.mm in Sources */,
 				9D68A3DFFE9D9F1D85EDAC3F /* juce_gui_basics.mm in Sources */,
 				4B731F92183ED90D6FBC7D1A /* juce_gui_extra.mm in Sources */,
-				A12176DE172AE40200D52686 /* Monome.cpp in Sources */,
+				A122C172175A4F5C00BF3BA0 /* MonomeGui.cpp in Sources */,
+				A122C175175A60BE00BF3BA0 /* DrumPattern.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

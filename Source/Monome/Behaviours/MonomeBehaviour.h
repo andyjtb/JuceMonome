@@ -25,6 +25,11 @@ public:
     virtual void buttonDown(ToggleButton* buttonPressed) = 0;
     virtual void buttonUp(ToggleButton* buttonPressed) = 0;
     
+    void setButtonsArray (ToggleButton _buttons[])
+    {
+        buttons = _buttons;
+    }
+    
 //    virtual void timerCallback(int timerId) = 0;
     
 //    virtual void acivate() = 0;
@@ -34,6 +39,7 @@ public:
     
 protected:
     String name;
+    ToggleButton* buttons;
 };
 
 class MonomeToggle : public MonomeBehaviour

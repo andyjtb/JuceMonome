@@ -53,7 +53,7 @@ MonomeGui::MonomeGui(monome_t* _monome)
     behaviours.add(hold);
     
     addAndMakeVisible(&behaviourCombo);
-    for (int i = 0; i < behaviours.size(); i++) 
+    for (int i = 0; i < behaviours.size(); i++)
         behaviourCombo.addItem (behaviours[i]->getName(), i+1);
 }
 
@@ -76,7 +76,7 @@ void MonomeGui::paint(Graphics& g)
     g.drawText ("Behaviours",
                 behaviourCombo.getX(), behaviourCombo.getY()-15, 80, 16,
                 Justification::centred, true);
-
+    
 }
 
 void MonomeGui::resized()
@@ -108,7 +108,7 @@ void MonomeGui::handleDown(const monome_event_t *e)
     const MessageManagerLock mm;
     
     ToggleButton* b = &buttonGrid[e->grid.x][e->grid.y];
-
+    
     behaviours[behaviourCombo.getSelectedId()-1]->buttonDown(b);
 }
 
@@ -117,8 +117,8 @@ void MonomeGui::handleUp(const monome_event_t *e)
     const MessageManagerLock mm;
     
     ToggleButton* b = &buttonGrid[e->grid.x][e->grid.y];
-//    b->setToggleState(!b->getToggleState(), true);
-//     b->setToggleState(false, true);
+    //    b->setToggleState(!b->getToggleState(), true);
+    //     b->setToggleState(false, true);
     behaviours[behaviourCombo.getSelectedId()-1]->buttonUp(b);
 }
 

@@ -12,44 +12,11 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include <monome.h>
 #include "MonomeUtility.h"
-#include "MonomeBehaviour.h"
+#include "MonomeGui.h"
 
-class MonomeThread;
+#include "DrumPattern.h"
 
-class MonomeGui : public Component,
-                  public Button::Listener,
-                  public Slider::Listener
-{
-public:
-    MonomeGui(monome_t* _monome);
-    ~MonomeGui();
-    
-    void paint(Graphics& g);
-    void resized();
-    
-    void handleDown (const monome_event_t *e);
-    void handleUp (const monome_event_t *e);
-    
-    void sliderValueChanged (Slider* slider);
-    void buttonClicked (Button* button);
-    
-    void clear();
-    void all();
-    
-   // ToggleButton* getButtonGrid() { return &buttonGrid; }
-    
-private:
-    monome_t* monome;
-    ScopedPointer<MonomeThread> monThread;
-    
-    TextButton allB, clearB;
-    Slider intensity;
-    ToggleButton buttonGrid[8][8];
-    
-    OwnedArray<MonomeBehaviour> behaviours;
-    ComboBox behaviourCombo;
-};
-
+class DrumPattern;
 
 /**Create a instance of Juce Monome and it will deal with everything within it, control the behaviour in MonomeGui
 */
@@ -122,7 +89,8 @@ public:
                 monomeSelect.setEnabled(false);
                 connect.setEnabled(false);
                 
-                monGui = new MonomeGui(monome);
+                //monGui = new MonomeGui(monome);
+                monGui = new DrumPattern(monome);
                 addAndMakeVisible(monGui);
                 monGui->setBounds(0, 40, getWidth(), getHeight()-40);
             }
@@ -138,7 +106,8 @@ public:
                 monGui->setVisible(false);
                 monGui->clear();
                 
-                MonomeGui* toDelete = monGui.release();
+                //MonomeGui* toDelete = monGui.release();
+                DrumPattern* toDelete = monGui.release();
                 delete toDelete;
             }
         }
@@ -150,7 +119,9 @@ private:
     ComboBox monomeSelect;
     TextButton connect, disconnect;
     
-    ScopedPointer<MonomeGui> monGui;
+    //ScopedPointer<MonomeGui> monGui;
+    
+    ScopedPointer<DrumPattern> monGui;
 };
 
 
@@ -159,7 +130,7 @@ class MonomeThread   : public Thread
 {
 public:
     //==============================================================================
-    MonomeThread(monome_t* _monome, MonomeGui* _gui) : Thread ("MonomeListener")
+    MonomeThread(monome_t* _monome, void* _gui) : Thread ("MonomeListener")
     {
         monome = _monome;
         monome_register_handler(monome, MONOME_BUTTON_DOWN, handle_down, _gui);
