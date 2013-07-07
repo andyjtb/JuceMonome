@@ -8,8 +8,12 @@
 
 #include "Monome.h"
 
+class DrumPattern;
+
 MonomeGui::MonomeGui(monome_t* _monome)
 {
+    samplesTree = ValueTree("SAMPLES");
+    
     addAndMakeVisible(&intensity);
     intensity.setRange(0, 15,1);
     intensity.setValue(intensity.getMaximum());
@@ -41,20 +45,32 @@ MonomeGui::MonomeGui(monome_t* _monome)
     clearB.addListener(this);
     clearB.setConnectedEdges(1);
     
+    addAndMakeVisible(&startB);
+    startB.setButtonText("Start");
+    startB.addListener(this);
+    startB.setConnectedEdges(2);
     
+    addAndMakeVisible(&stopB);
+    stopB.setButtonText("Stop");
+    stopB.addListener(this);
+    stopB.setConnectedEdges(1);
+    
+    addAndMakeVisible(&samplesB);
+    samplesB.setButtonText("Load Samples");
+    samplesB.addListener(this);
+    
+    addAndMakeVisible(&bpmSlider);
+    bpmSlider.setRange (1, 360, 1
+                        );
+    bpmSlider.setSliderStyle (Slider::IncDecButtons);
+    bpmSlider.setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    bpmSlider.setValue(120, dontSendNotification);
     
     monThread = new MonomeThread (monome, this);
     monThread->startThread();
     
-    MonomeToggle* toggle = new MonomeToggle();
-    behaviours.add(toggle);
-    
-    MonomeHold* hold = new MonomeHold();
-    behaviours.add(hold);
-    
-    addAndMakeVisible(&behaviourCombo);
-    for (int i = 0; i < behaviours.size(); i++)
-        behaviourCombo.addItem (behaviours[i]->getName(), i+1);
+    x = 0;
+    numTimers = 2;
 }
 
 MonomeGui::~MonomeGui()
@@ -72,11 +88,6 @@ void MonomeGui::paint(Graphics& g)
     g.drawText ("LED Brightness",
                 intensity.getX(), intensity.getY()-15, 80, 16,
                 Justification::centred, true);
-    
-    g.drawText ("Behaviours",
-                behaviourCombo.getX(), behaviourCombo.getY()-15, 80, 16,
-                Justification::centred, true);
-    
 }
 
 void MonomeGui::resized()
@@ -99,7 +110,11 @@ void MonomeGui::resized()
     allB.setBounds(35, getHeight()-30, 50,20);
     clearB.setBounds(85, getHeight()-30, 50, 20);
     
-    behaviourCombo.setBounds(x + 30, buttonGrid[0][0].getY(), 100, 20);
+    startB.setBounds(x + 30, buttonGrid[0][0].getY(), 50, 20);
+    stopB.setBounds(x + 80, buttonGrid[0][0].getY(), 50, 20);
+    bpmSlider.setBounds(x + 30, buttonGrid[0][0].getY() + 30, 140, 20);
+    samplesB.setBounds(x+ 45, bpmSlider.getY() + 30, 100, 20);
+    
 }
 
 
@@ -108,8 +123,8 @@ void MonomeGui::handleDown(const monome_event_t *e)
     const MessageManagerLock mm;
     
     ToggleButton* b = &buttonGrid[e->grid.x][e->grid.y];
-    
-    behaviours[behaviourCombo.getSelectedId()-1]->buttonDown(b);
+    b->setToggleState( ! b->getToggleState(), true);
+//    behaviours[behaviourCombo.getSelectedId()-1]->buttonDown(b);
 }
 
 void MonomeGui::handleUp(const monome_event_t *e)
@@ -119,7 +134,7 @@ void MonomeGui::handleUp(const monome_event_t *e)
     ToggleButton* b = &buttonGrid[e->grid.x][e->grid.y];
     //    b->setToggleState(!b->getToggleState(), true);
     //     b->setToggleState(false, true);
-    behaviours[behaviourCombo.getSelectedId()-1]->buttonUp(b);
+//    behaviours[behaviourCombo.getSelectedId()-1]->buttonUp(b);
 }
 
 void MonomeGui::sliderValueChanged(Slider *slider)
@@ -127,6 +142,14 @@ void MonomeGui::sliderValueChanged(Slider *slider)
     if (slider == &intensity)
     {
         monome_led_intensity(monome, int(slider->getValue()));
+    }
+    
+    else if (slider == &bpmSlider)
+    {
+        for (int i = 0; i < numTimers; i++) {
+            stopTimer(i);
+            startTimer(i, 60000/bpmSlider.getValue());
+        }
     }
 }
 
@@ -163,6 +186,38 @@ void MonomeGui::buttonClicked (Button* _button)
         all();
     }
     
+    else if (_button == & startB)
+        for (int i = 0; i < numTimers; i++)
+            startTimer(i, 60000/bpmSlider.getValue());
+    
+    else if (_button == &stopB)
+        for (int i = 0; i < numTimers; i++)
+            stopTimer(i);
+    
+    else if (_button == &samplesB)
+    {
+        
+        //Display auth dialog
+        SampleWindow* sampleWindow;
+        sampleWindow = new SampleWindow(samplesTree);
+        
+        DialogWindow::LaunchOptions o;
+        
+        o.content.setOwned (sampleWindow);
+        o.content->setSize (sampleWindow->getWidth(), sampleWindow->getHeight());
+        
+        o.dialogTitle                   = "Select Samples";
+        o.dialogBackgroundColour        = Colours::lightgrey;
+        o.escapeKeyTriggersCloseButton  = true;
+        o.useNativeTitleBar             = false;
+        o.resizable                     = false;
+        
+        if (o.runModal() != 0 )
+        {
+            DBG ("SAVE");
+        }
+    }
+    
     else
     {
         GridPosition currentPosition;
@@ -172,5 +227,39 @@ void MonomeGui::buttonClicked (Button* _button)
             monome_led_on(monome, currentPosition.x, currentPosition.y);
         else
             monome_led_off(monome, currentPosition.x, currentPosition.y);
+    }
+}
+
+void MonomeGui::timerCallback(int timer)
+{
+    if (timer == 0) {
+        //Going across
+        if (x > 7) {
+            x = 0;
+        }
+        
+        for (int y = 0; y < monome_get_rows(monome); y++)
+            lightOn(x, y);
+        
+        startTimer(1, 200);
+        
+    }
+    
+    if (timer == 1)
+    {
+        if (x > 7) {
+            x = 0;
+        }
+        
+        for (int y = 0; y < monome_get_rows(monome); y++)
+        {
+            if (! buttonGrid[x][y].getToggleState()) {
+                lightOff(x, y);
+            }
+        }
+        
+        x++;
+        
+        stopTimer(1);
     }
 }

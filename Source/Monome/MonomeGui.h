@@ -13,13 +13,15 @@
 #include <monome.h>
 #include "Monome.h"
 #include "MonomeUtility.h"
-#include "MonomeBehaviour.h"
+
+#include "SampleWindow.h"
 
 class MonomeThread;
 
 class MonomeGui : public Component,
                   public Button::Listener,
-                  public Slider::Listener
+                  public Slider::Listener,
+                  public MultiTimer
 {
 public:
     MonomeGui(monome_t* _monome);
@@ -37,18 +39,30 @@ public:
     void clear();
     void all();
     
-    // ToggleButton* getButtonGrid() { return &buttonGrid; }
+    void lightOn (int x, int y) { //buttonGrid[x][y].setToggleState(true, true);
+                                    monome_led_on(monome, x, y);}
+    void lightOff (int x, int y) { //buttonGrid[x][y].setToggleState(false, true);
+                                    monome_led_off(monome, x, y); }
+    void toggleLight (int x, int y) { buttonGrid[x][y].setToggleState(!buttonGrid[x][y].getToggleState(), true); }
+    
+    void timerCallback (int timer);
     
 private:
     monome_t* monome;
     ScopedPointer<MonomeThread> monThread;
     
-    TextButton allB, clearB;
-    Slider intensity;
+    TextButton allB, clearB, startB, stopB, samplesB;
+    Slider intensity, bpmSlider;
     ToggleButton buttonGrid[8][8];
     
-    OwnedArray<MonomeBehaviour> behaviours;
+//    
+//    OwnedArray<MonomeBehaviour> behaviours;
     ComboBox behaviourCombo;
+    
+    int x, numTimers;
+    
+    ValueTree samplesTree;
+    
 };
 
 #endif /* defined(__JuceMonome__MonomeGui__) */

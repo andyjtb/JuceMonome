@@ -14,9 +14,46 @@
 #include "MonomeUtility.h"
 #include "MonomeGui.h"
 
-#include "DrumPattern.h"
+class MonomeThread   : public Thread
+{
+public:
+    //==============================================================================
+    MonomeThread(monome_t* _monome, void* _gui) : Thread ("MonomeListener")
+    {
+        monome = _monome;
+        monome_register_handler(monome, MONOME_BUTTON_DOWN, handle_down, _gui);
+        monome_register_handler(monome, MONOME_BUTTON_UP, handle_up, _gui);
+    }
+    
+    ~MonomeThread()
+    {
+        monome_unregister_handler(monome, MONOME_BUTTON_DOWN);
+        monome_unregister_handler(monome, MONOME_BUTTON_UP);
+        
+        monome_close(monome);
+        
+        stopThread (200);
+    }
+    
+    void run()
+    {
+        monome_event_loop(monome);
+    }
+    
+    static void handle_down(const monome_event_t *e, void *data)
+    {
+        static_cast<MonomeGui*>(data)->handleDown(e);
+    }
+    
+    static void handle_up(const monome_event_t *e, void *data)
+    {
+        static_cast<MonomeGui*>(data)->handleUp(e);
+    }
+    
+private:
+    monome_t* monome;
+};
 
-class DrumPattern;
 
 /**Create a instance of Juce Monome and it will deal with everything within it, control the behaviour in MonomeGui
 */
@@ -89,8 +126,7 @@ public:
                 monomeSelect.setEnabled(false);
                 connect.setEnabled(false);
                 
-                //monGui = new MonomeGui(monome);
-                monGui = new DrumPattern(monome);
+                monGui = new MonomeGui(monome);
                 addAndMakeVisible(monGui);
                 monGui->setBounds(0, 40, getWidth(), getHeight()-40);
             }
@@ -105,10 +141,6 @@ public:
             {
                 monGui->setVisible(false);
                 monGui->clear();
-                
-                //MonomeGui* toDelete = monGui.release();
-                DrumPattern* toDelete = monGui.release();
-                delete toDelete;
             }
         }
     }
@@ -119,51 +151,8 @@ private:
     ComboBox monomeSelect;
     TextButton connect, disconnect;
     
-    //ScopedPointer<MonomeGui> monGui;
+    ScopedPointer<MonomeGui> monGui;
     
-    ScopedPointer<DrumPattern> monGui;
+    //ScopedPointer<DrumPattern> monGui;
 };
-
-
-
-class MonomeThread   : public Thread
-{
-public:
-    //==============================================================================
-    MonomeThread(monome_t* _monome, void* _gui) : Thread ("MonomeListener")
-    {
-        monome = _monome;
-        monome_register_handler(monome, MONOME_BUTTON_DOWN, handle_down, _gui);
-        monome_register_handler(monome, MONOME_BUTTON_UP, handle_up, _gui);
-    }
-    
-    ~MonomeThread()
-    {
-        monome_unregister_handler(monome, MONOME_BUTTON_DOWN);
-        monome_unregister_handler(monome, MONOME_BUTTON_UP);
-        
-        monome_close(monome);
-        
-        stopThread (200);
-    }
-    
-    void run()
-    {
-        monome_event_loop(monome);
-    }
-    
-    static void handle_down(const monome_event_t *e, void *data)
-    {
-        static_cast<MonomeGui*>(data)->handleDown(e);
-    }
-    
-    static void handle_up(const monome_event_t *e, void *data)
-    {
-        static_cast<MonomeGui*>(data)->handleUp(e);
-    }
-    
-private:
-    monome_t* monome;
-};
-
 #endif /* defined(__JuceMonome__MonomeGui__) */
