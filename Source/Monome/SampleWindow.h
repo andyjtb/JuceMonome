@@ -10,20 +10,22 @@
 #define __JuceMonome__SampleWindow__
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "AudioControl.h"
 
 class SampleWindow  : public Component,
-                      public ButtonListener
+                      public ButtonListener,
+                      public FilenameComponentListener
 {
 public:
     //==============================================================================
-    SampleWindow (ValueTree sampTree);
+    SampleWindow (ValueTree sampTree, AudioControl* audioCont);
     ~SampleWindow();
     
     void paint (Graphics& g);
     void resized();
     void buttonClicked (Button* buttonThatWasClicked);
     
-    String testFile(ValueTree sampTree, int i);
+    void filenameComponentChanged (FilenameComponent *fileComponentThatHasChanged);
     
 private:
     //===========================================================================
@@ -32,7 +34,12 @@ private:
     
     ValueTree samplesTree;
     
+    ScopedPointer<TextEditor> sampleName[8];
     ScopedPointer<FilenameComponent> filenameComponent[8];
+    ScopedPointer<Slider> midiNum[8];
+    ScopedPointer<TextButton> testButton[8];
+    
+    OptionalScopedPointer<AudioControl> audioControl;
     
     TextButton save;
     TextButton cancel;

@@ -10,9 +10,9 @@
 
 class DrumPattern;
 
-MonomeGui::MonomeGui(monome_t* _monome)
+MonomeGui::MonomeGui(monome_t* _monome, AudioControl* audio) : samplesTree("SAMPLES")
 {
-    samplesTree = ValueTree("SAMPLES");
+    audioControl.set(audio, false);
     
     addAndMakeVisible(&intensity);
     intensity.setRange(0, 15,1);
@@ -59,6 +59,10 @@ MonomeGui::MonomeGui(monome_t* _monome)
     samplesB.setButtonText("Load Samples");
     samplesB.addListener(this);
     
+    addAndMakeVisible(&audioSettings);
+    audioSettings.setButtonText("Audio Settings");
+    audioSettings.addListener(this);
+    
     addAndMakeVisible(&bpmSlider);
     bpmSlider.setRange (1, 360, 1
                         );
@@ -68,6 +72,20 @@ MonomeGui::MonomeGui(monome_t* _monome)
     
     monThread = new MonomeThread (monome, this);
     monThread->startThread();
+    
+    File settings ("~/Desktop/Programming/Monome/Settings.xml");
+    
+    if (settings.existsAsFile())
+    {
+        ScopedPointer<XmlElement> settingsXml;
+        settingsXml = XmlDocument::parse(settings);
+        
+        samplesTree = ValueTree::fromXml(*settingsXml);
+        
+        audioControl->loadFile(samplesTree);
+    }
+    else
+        DBG("Settings failed");
     
     x = 0;
     numTimers = 2;
@@ -113,7 +131,9 @@ void MonomeGui::resized()
     startB.setBounds(x + 30, buttonGrid[0][0].getY(), 50, 20);
     stopB.setBounds(x + 80, buttonGrid[0][0].getY(), 50, 20);
     bpmSlider.setBounds(x + 30, buttonGrid[0][0].getY() + 30, 140, 20);
+    
     samplesB.setBounds(x+ 45, bpmSlider.getY() + 30, 100, 20);
+    audioSettings.setBounds(x + 45, samplesB.getY() + 30, 100, 20);
     
 }
 
@@ -150,6 +170,7 @@ void MonomeGui::sliderValueChanged(Slider *slider)
             stopTimer(i);
             startTimer(i, 60000/bpmSlider.getValue());
         }
+        audioControl->setTempo(60000/bpmSlider.getValue());
     }
 }
 
@@ -160,6 +181,18 @@ void MonomeGui::clear()
         for (int j = 0; j < monome_get_rows(monome); j++)
         {
             buttonGrid[i][j].setToggleState(false, true);
+        }
+    }
+}
+
+void MonomeGui::clearExceptSelected()
+{
+    for (int i = 0; i < monome_get_cols(monome); i++)
+    {
+        for (int j = 0; j < monome_get_rows(monome); j++)
+        {
+            if ( ! buttonGrid[i][j].getToggleState())
+                monome_led_off(monome, i, j);
         }
     }
 }
@@ -191,15 +224,23 @@ void MonomeGui::buttonClicked (Button* _button)
             startTimer(i, 60000/bpmSlider.getValue());
     
     else if (_button == &stopB)
+    {
         for (int i = 0; i < numTimers; i++)
             stopTimer(i);
+        clearExceptSelected();
+    }
+    
+    else if (_button == &audioSettings)
+    {
+        audioControl->showAudioPreferences(this);
+    }
     
     else if (_button == &samplesB)
     {
         
         //Display auth dialog
         SampleWindow* sampleWindow;
-        sampleWindow = new SampleWindow(samplesTree);
+        sampleWindow = new SampleWindow(samplesTree, audioControl);
         
         DialogWindow::LaunchOptions o;
         
@@ -214,7 +255,13 @@ void MonomeGui::buttonClicked (Button* _button)
         
         if (o.runModal() != 0 )
         {
-            DBG ("SAVE");
+            for (int i = 0; i < numTimers; i++)
+                stopTimer(i);
+            
+            audioControl->loadFile(samplesTree);
+            
+            for (int i = 0; i < numTimers; i++)
+                startTimer(i, 60000/bpmSlider.getValue());
         }
     }
     
@@ -230,9 +277,22 @@ void MonomeGui::buttonClicked (Button* _button)
     }
 }
 
+void MonomeGui::playNotes(int x)
+{
+    audioControl->stopSamples(samplesTree);
+    
+    for (int y = 0; y < monome_get_rows(monome); y++)
+    {
+        if (buttonGrid[x][y].getToggleState()) {
+            audioControl->playSample(samplesTree.getChild (y));
+        }
+    }
+}
+
 void MonomeGui::timerCallback(int timer)
 {
     if (timer == 0) {
+        //lights on
         //Going across
         if (x > 7) {
             x = 0;
@@ -242,11 +302,15 @@ void MonomeGui::timerCallback(int timer)
             lightOn(x, y);
         
         startTimer(1, 200);
+        //audioControl->setCounting(true);
+        
+        playNotes(x);
         
     }
     
     if (timer == 1)
     {
+        //Lights off
         if (x > 7) {
             x = 0;
         }
@@ -259,6 +323,8 @@ void MonomeGui::timerCallback(int timer)
         }
         
         x++;
+        
+        //audioControl->stopSamples();
         
         stopTimer(1);
     }

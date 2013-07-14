@@ -14,6 +14,8 @@
 #include "Monome.h"
 #include "MonomeUtility.h"
 
+#include "AudioControl.h"
+
 #include "SampleWindow.h"
 
 class MonomeThread;
@@ -24,7 +26,7 @@ class MonomeGui : public Component,
                   public MultiTimer
 {
 public:
-    MonomeGui(monome_t* _monome);
+    MonomeGui(monome_t* _monome, AudioControl* audio);
     ~MonomeGui();
     
     void paint(Graphics& g);
@@ -37,6 +39,7 @@ public:
     void buttonClicked (Button* button);
     
     void clear();
+    void clearExceptSelected();
     void all();
     
     void lightOn (int x, int y) { //buttonGrid[x][y].setToggleState(true, true);
@@ -47,11 +50,14 @@ public:
     
     void timerCallback (int timer);
     
+    void playNotes (int x);
+    
 private:
     monome_t* monome;
     ScopedPointer<MonomeThread> monThread;
+    OptionalScopedPointer<AudioControl> audioControl;
     
-    TextButton allB, clearB, startB, stopB, samplesB;
+    TextButton allB, clearB, startB, stopB, samplesB, audioSettings;
     Slider intensity, bpmSlider;
     ToggleButton buttonGrid[8][8];
     

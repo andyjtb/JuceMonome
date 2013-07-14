@@ -14,6 +14,8 @@
 #include "MonomeUtility.h"
 #include "MonomeGui.h"
 
+#include "AudioControl.h"
+
 class MonomeThread   : public Thread
 {
 public:
@@ -126,7 +128,9 @@ public:
                 monomeSelect.setEnabled(false);
                 connect.setEnabled(false);
                 
-                monGui = new MonomeGui(monome);
+                audioControl = new AudioControl();
+                
+                monGui = new MonomeGui(monome, audioControl);
                 addAndMakeVisible(monGui);
                 monGui->setBounds(0, 40, getWidth(), getHeight()-40);
             }
@@ -153,6 +157,6 @@ private:
     
     ScopedPointer<MonomeGui> monGui;
     
-    //ScopedPointer<DrumPattern> monGui;
+    ScopedPointer<AudioControl> audioControl;
 };
 #endif /* defined(__JuceMonome__MonomeGui__) */
